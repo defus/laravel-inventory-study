@@ -4,7 +4,7 @@
  * {File description}
  * 
  * @author Christopher Avendano
- * @created Sep 6, 2014
+ * @created Sep 7, 2014
  * 
  */
 ?>
@@ -13,7 +13,7 @@
 
 {{-- Page title --}}
 @section('title')
-Add item
+Users   
 @stop
 
 {{-- Page specific CSS files --}}
@@ -25,31 +25,26 @@ Add item
 {{-- Page specific JS files --}}
 {{-- {{ HTML::script('--Path to js--') }} --}}
 @section('scripts')
-{{ HTML::script('assets/js/admin/items.js') }}
-
+{{ HTML::script('assets/js/admin/users.js') }}
 @stop
 
 {{-- Page content --}}
 @section('content')
-<div class="col-sm-12">
-    @if( !empty( Session::get('message') ) )
-    <span class="col-sm-5 alert alert-success" role='alert'> {{ Session::get('message') }}</span>
-    @endif
-</div>
+<h1>Users </h1>
 <div class="col-sm-5">
-    @if( isset( $items ) & !empty( $items ) )
+    @if( isset( $users ) & !empty( $users ) )
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
+        <th>First name</th>
+        <th>Last name</th>
         </thead>
         <tbody>
-            @foreach( $items as $value )
+            @foreach( $users as $value )
             <tr class="edit-item" data-id='{{{ $value->id }}}'>
                 <td> {{{ $value->id }}} </td>
-                <td> {{{ $value->name }}} </td>
-                <td> {{{ $value->description }}} </td>
+                <td> {{{ $value->first_name }}} </td>
+                <td> {{{ $value->last_name }}} </td>
             </tr>
             @endforeach
         </tbody>
@@ -57,6 +52,6 @@ Add item
     @endif
 </div>
 <div class="col-sm-12">
-    {{ link_to('admin/items/add', 'Add Item', $attributes = array('class' => 'btn-link')) }};
+    {{ link_to('admin/users/add', 'Add User', $attributes = array('class' => 'btn-link')) }}
 </div>
 @stop

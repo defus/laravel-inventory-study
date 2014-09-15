@@ -18,12 +18,12 @@
         {{ HTML::style('assets/css/bootstrap.min.css') }}
         {{ HTML::style('assets/css/bootstrap-theme.min.css') }}
         @yield('css')
-        
-        {{ HTML::script('assets/js/jquery.js') }}
-        @yield('scripts')
-        
+
     </head>
     <body>
         @yield('content')
+        
+        {{ HTML::script('assets/js/jquery.js') }}
+        @yield('scripts')
     </body>
 </html>

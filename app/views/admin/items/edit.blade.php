@@ -29,7 +29,7 @@ Add item
 {{-- Page specific JS files --}}
 {{-- {{ HTML::script('--Path to js--') }} --}}
 @section('scripts')
-    {{ HTML::script('assets/js/admin/items/items.js') }}
+    {{ HTML::script('assets/js/admin/items.js') }}
 @stop
 
 {{-- Page content --}}

@@ -1,9 +1,5 @@
 $(document).ready(function() {
-
-    $(document).on('click', '#add_item', function() {
-        window.location = 'items/add';
-    });
-
+    
     $(document).on('click', '.edit-item', function() {
         window.location = 'items/edit/' + $(this).data('id');
     });
