@@ -16,6 +16,11 @@ class UserController extends \BaseController {
     private $_userModel;
 
     public function __construct() {
+        
+        $this->beforeFilter('auth', array('except' => 'login'));
+
+        $this->beforeFilter('csrf', array('on' => 'post'));
+        
         $this->_userModel = new \UserModel();
     }
 
@@ -65,7 +70,7 @@ class UserController extends \BaseController {
                     'user' => $user
         ));
     }
-    
+
     public function delete($id) {
 
         // Find by ID first
@@ -84,8 +89,29 @@ class UserController extends \BaseController {
         }
 
         return \Redirect::to('admin/users')
-                ->with('message', 'Item deleted');
-        
+                        ->with('message', 'Item deleted');
+    }
+
+    public function login() {
+
+        if (!empty(\Input::all())) {
+
+            $add = $this->_userModel->login(\Input::all());
+            if (TRUE === $add) {
+                return \Redirect::to('/admin');
+            } else {
+                return \Redirect::to(\Request::url())
+                                ->withErrors($add)
+                                ->withInput();
+            }
+        }
+
+        return \View::make('admin.user.login');
     }
     
+    public function logout(){
+        \Auth::logout();
+        return \Redirect::to( '/login' );
+    }
+
 }

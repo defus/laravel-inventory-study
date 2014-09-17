@@ -8,8 +8,15 @@
  * @created Sep 9, 2014
  * 
  */
-class UserModel extends Eloquent {
+use Illuminate\Auth\UserTrait;
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\Reminders\RemindableTrait;
+use Illuminate\Auth\Reminders\RemindableInterface;
 
+class UserModel extends Eloquent implements UserInterface, RemindableInterface {
+    
+    use UserTrait, RemindableTrait;
+    
     /**
      * The database table used by the model.
      *
@@ -17,6 +24,13 @@ class UserModel extends Eloquent {
      */
     protected $table = 'users';
     protected $fillable = array('first_name', 'last_name', 'email', 'password');
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = array('password', 'remember_token');
     private $_validationRules = array(
         'first_name' => 'required',
         'last_name' => 'required',
@@ -100,6 +114,22 @@ class UserModel extends Eloquent {
         }
 
         return FALSE;
+    }
+
+    public function login($data) {
+
+        //Unset token
+        unset($data['_token']);
+        $validation = Validator::make($data, array(
+                    'email' => 'required|email',
+                    'password' => 'required'
+        ));
+
+        if ($validation->passes() && Auth::attempt($data)) {
+            return TRUE;
+        }
+
+        return $validation;
     }
 
 }
